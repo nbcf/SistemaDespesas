@@ -24,14 +24,6 @@ namespace EFController.Map
             this.Property(d => d.Data_Abertura).HasColumnName("DATA_ABERTURA");
             this.Property(d => d.Descricao).HasColumnName("DESCRICAO");
 
-
-            /*  public int Id { get; set; }
-        public string? Nome { get; set; }
-        public string? Banco { get; set; }
-        public string? Agencia { get; set; }
-        public string? NumeroConta { get; set; }
-        public string? Digito { get; set; }
-        public double Saldo { get; set; }*/
         }
     }
 }

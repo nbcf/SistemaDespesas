@@ -638,26 +638,31 @@ namespace SistemaDespesas.views
 
         private void gridCrudContas_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            var gridVazia = gridCrudContas.CurrentRow.Cells[0].Value.ToString();
-            if (string.IsNullOrEmpty(gridVazia))
+            int tamanhoLista = gridCrudContas.RowCount;
+            if (tamanhoLista > 0)
             {
-
-            }
-            else if (gridVazia.Length > 0)
-            {
-                if (typeEdition.Equals("insert"))
+                var gridVazia = gridCrudContas.CurrentRow.Cells[0].Value.ToString();
+                if (string.IsNullOrEmpty(gridVazia))
                 {
-                    operationType = "newInsertion";
-                    behaviorClickGrid();
-                }
-                else if (typeEdition.Equals("search"))
-                {
-                    operationType = "updateData";
-                    behaviorClickGridPesquisa();
 
                 }
+                else if (gridVazia.Length > 0)
+                {
+                    if (typeEdition.Equals("insert"))
+                    {
+                        operationType = "newInsertion";
+                        behaviorClickGrid();
+                    }
+                    else if (typeEdition.Equals("search"))
+                    {
+                        operationType = "updateData";
+                        behaviorClickGridPesquisa();
 
+                    }
+
+                }
             }
+            else { }
         }
 
         public void clearFieldsFormulario()
