@@ -591,9 +591,7 @@ namespace SistemaDespesas.views
             txtSaldo.Text = gridCrudContas.CurrentRow.Cells[6].Value.ToString();
             dtDeste.Value = Convert.ToDateTime(gridCrudContas.CurrentRow.Cells[7].Value.ToString()) ;
             txtDescricao.Text = gridCrudContas.CurrentRow.Cells[8].Value.ToString();
-         //  
-            //txtUf.Text = gridCrudContas.CurrentRow.Cells[8].Value.ToString();
-            //txtCep.Text = gridCrudContas.CurrentRow.Cells[9].Value.ToString();
+
         }
 
         private void behaviorClickGridPesquisa()
