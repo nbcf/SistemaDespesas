@@ -16,5 +16,13 @@ namespace SistemaDespesas
             viewContas.Text = "Gerenciamento de Endereços Offline";
             viewContas.Show();
         }
+
+        private void movimentosToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Movimentos viewMov = Movimentos.GetInstanciaMovimentos();
+            viewMov.MdiParent = this;
+            viewMov.Text = "Gerenciamento de Endereços Offline";
+            viewMov.Show();
+        }
     }
 }

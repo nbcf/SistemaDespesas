@@ -31,6 +31,7 @@
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.cadastrosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.contasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.movimentosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -47,7 +48,8 @@
             // cadastrosToolStripMenuItem
             // 
             this.cadastrosToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.contasToolStripMenuItem});
+            this.contasToolStripMenuItem,
+            this.movimentosToolStripMenuItem});
             this.cadastrosToolStripMenuItem.Name = "cadastrosToolStripMenuItem";
             this.cadastrosToolStripMenuItem.Size = new System.Drawing.Size(71, 20);
             this.cadastrosToolStripMenuItem.Text = "Cadastros";
@@ -55,9 +57,16 @@
             // contasToolStripMenuItem
             // 
             this.contasToolStripMenuItem.Name = "contasToolStripMenuItem";
-            this.contasToolStripMenuItem.Size = new System.Drawing.Size(111, 22);
+            this.contasToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.contasToolStripMenuItem.Text = "Contas";
             this.contasToolStripMenuItem.Click += new System.EventHandler(this.contasToolStripMenuItem_Click);
+            // 
+            // movimentosToolStripMenuItem
+            // 
+            this.movimentosToolStripMenuItem.Name = "movimentosToolStripMenuItem";
+            this.movimentosToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.movimentosToolStripMenuItem.Text = "Movimentos";
+            this.movimentosToolStripMenuItem.Click += new System.EventHandler(this.movimentosToolStripMenuItem_Click);
             // 
             // Menu
             // 
@@ -82,5 +91,6 @@
         private MenuStrip menuStrip1;
         private ToolStripMenuItem cadastrosToolStripMenuItem;
         private ToolStripMenuItem contasToolStripMenuItem;
+        private ToolStripMenuItem movimentosToolStripMenuItem;
     }
 }

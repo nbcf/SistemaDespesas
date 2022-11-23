@@ -131,7 +131,7 @@ namespace SistemaDespesas.views
             else if (_InstanciaContasView != null)
             {
 
-                MessageBox.Show("O Gerênciador de Tipos de Unidades já se encontra aberto!", "Aviso do Sistema", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                MessageBox.Show("O Gerênciador de Constas já se encontra aberto!", "Aviso do Sistema", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
 
             return _InstanciaContasView;
