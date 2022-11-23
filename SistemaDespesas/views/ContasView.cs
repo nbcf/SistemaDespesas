@@ -275,6 +275,9 @@ namespace SistemaDespesas.views
             lbTotalEncontrados.Visible = false;
             clearFieldsFormulario();
             disableFieldsFormulario();
+            txtBoxId.Visible = false;
+            label1.Visible = false;
+
 
         }
 
@@ -431,13 +434,13 @@ namespace SistemaDespesas.views
             gridCrudContas.Columns[8].HeaderText = "DESCRIÇÃO";
 
             gridCrudContas.Columns[0].Width = 60;
-            gridCrudContas.Columns[1].Width = 150;
+            gridCrudContas.Columns[1].Width = 180;
             gridCrudContas.Columns[2].Width = 180;
-            gridCrudContas.Columns[3].Width = 100;
+            gridCrudContas.Columns[3].Width = 110;
             gridCrudContas.Columns[4].Width = 110;
-            gridCrudContas.Columns[5].Width = 100;
-            gridCrudContas.Columns[6].Width = 100;
-            gridCrudContas.Columns[7].Width = 100;
+            gridCrudContas.Columns[5].Width = 110;
+            gridCrudContas.Columns[6].Width = 110;
+            gridCrudContas.Columns[7].Width = 130;
             gridCrudContas.Columns[8].Width = 200;
             gridCrudContas.Columns[8].DisplayIndex = 1;
             gridCrudContas.Columns[1].DisplayIndex = 2;
