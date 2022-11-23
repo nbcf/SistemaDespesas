@@ -17,14 +17,10 @@ namespace EFController.Context
 
         }
 
-
-
-        public DbSet<Movimento> Movimentos { get; set; }
         public DbSet<Conta> Contas { get; set; }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             Database.SetInitializer<SistemaContext>(null);
-            modelBuilder.Configurations.Add(new MovimentoMap());
             modelBuilder.Configurations.Add(new ContaMap());
             base.OnModelCreating(modelBuilder);
         }

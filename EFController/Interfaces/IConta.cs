@@ -6,7 +6,7 @@ namespace EFController.Interfaces
     public interface IConta
     {
         [OperationContract]
-        void Cadastrar(string Nome, string Banco, string Agencia, string NumeroConta, string Digito, double Saldo);
+        void Cadastrar(string Nome, string Banco, string Agencia, string NumeroConta, string Digito, double Saldo, DateTime dataAbertura, string descricao);
 
         [OperationContract]
         Conta Buscar(int id);
@@ -18,7 +18,7 @@ namespace EFController.Interfaces
         void Deletar(int id);
 
         [OperationContract]
-        void Editar(int id, string Nome, string Banco, string Agencia, string NumeroConta, string Digito, double Saldo);
+        void Editar(int id, string Nome, string Banco, string Agencia, string NumeroConta, string Digito, double Saldo, DateTime dataAbertura, string descricao);
     }
 }
 

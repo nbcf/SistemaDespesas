@@ -1,8 +1,10 @@
 ﻿using EFController.Interfaces;
+using EFController.Map;
 using EFController.Repositories;
 using Entidades;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,8 +15,8 @@ namespace Controller
     {
         private ContaRep rep = new ContaRep();
 
-
-        public void Cadastrar(string Nome, string Banco, string Agencia, string NumeroConta, string Digito, double Saldo)
+ 
+        public void Cadastrar(string Nome, string Banco, string Agencia, string NumeroConta, string Digito, double Saldo, DateTime dataAbertura, string descricao)
         {
             Conta contacad = new Conta();
             contacad.Nome = Nome;
@@ -23,6 +25,8 @@ namespace Controller
             contacad.NumeroConta = NumeroConta;
             contacad.Digito = Digito;
             contacad.Saldo = Saldo;
+            contacad.Data_Abertura = dataAbertura;
+            contacad.Descricao = descricao;
             rep.Cadastrar(contacad);
         }
 
@@ -37,12 +41,17 @@ namespace Controller
             return rep.Listar();
         }
 
+
+        //public DataTable ComboBoxConta() {
+
+        //    return rep.combobox();
+        //}
         public void Deletar(int id)
         {
             rep.Deletar(id);
         }
 
-        public void Editar(int id, string Nome, string Banco, string Agencia, string NumeroConta, string Digito, double Saldo)
+        public void Editar(int id, string Nome, string Banco, string Agencia, string NumeroConta, string Digito, double Saldo, DateTime dataAbertura, string descricao)
         {
             Conta contaedit = new Conta();
             contaedit.Id = id;
@@ -52,6 +61,8 @@ namespace Controller
             contaedit.NumeroConta = NumeroConta;
             contaedit.Digito = Digito;
             contaedit.Saldo = Saldo;
+            contaedit.Data_Abertura = dataAbertura;
+            contaedit.Descricao = descricao;
             rep.Editar(contaedit);
         }
 

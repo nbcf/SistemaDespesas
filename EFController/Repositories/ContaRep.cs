@@ -2,10 +2,14 @@
 using Entidades;
 using System;
 using System.Collections.Generic;
+using System.Data.Common;
+using System.Data.Entity.Core.EntityClient;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Globalization;
 
 namespace EFController.Repositories
 {
@@ -13,6 +17,7 @@ namespace EFController.Repositories
     {
 
         SistemaContext ctx = new SistemaContext();
+        public Conta pmContaRep;
         public int listarQtPesquisa = 0;
         public string acaoCrudConta = "";
         public void Cadastrar(Conta obj)
@@ -49,12 +54,12 @@ namespace EFController.Repositories
 
         public List<Conta> Listar()
         {
-
-            // using (var ctx = new SistemaContext()){
             var Contas = (from obj in ctx.Contas select obj).OrderBy(x => x.Nome).ToList();
             return Contas;
 
         }
+
+  
 
         public List<Conta> ListarPaginada(string listarPor, string ordernarPor, int limitt, int offset)
         {
@@ -135,6 +140,8 @@ namespace EFController.Repositories
                 objAntigo.NumeroConta = objNovo.NumeroConta;
                 objAntigo.Digito = objNovo.Digito;
                 objAntigo.Saldo = objNovo.Saldo;
+                objAntigo.Data_Abertura = objNovo.Data_Abertura;
+                objAntigo.Descricao = objNovo.Descricao;
                 ctx.SaveChanges();
                 acaoCrudConta = "EDIT!";
             }

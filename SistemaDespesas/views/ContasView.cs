@@ -146,7 +146,7 @@ namespace SistemaDespesas.views
    
         private void ContasView_Load(object sender, EventArgs e)
         {
-
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
         }
 
         private void ContasView_FormClosing(object sender, FormClosingEventArgs e)
@@ -427,17 +427,26 @@ namespace SistemaDespesas.views
             gridCrudContas.Columns[4].HeaderText = "N°. CONTA";
             gridCrudContas.Columns[5].HeaderText = "DIGITO";
             gridCrudContas.Columns[6].HeaderText = "SALDO";
+            gridCrudContas.Columns[7].HeaderText = "DESDE";
+            gridCrudContas.Columns[8].HeaderText = "DESCRIÇÃO";
 
-
-            gridCrudContas.Columns[0].Width = 50;
+            gridCrudContas.Columns[0].Width = 60;
             gridCrudContas.Columns[1].Width = 150;
-            gridCrudContas.Columns[2].Width = 180;// nome
-            gridCrudContas.Columns[3].Width = 90;//complemento
-            gridCrudContas.Columns[4].Width = 110;// join
-            gridCrudContas.Columns[5].Width = 60;//logra
-            gridCrudContas.Columns[6].Width = 80;// bairro
-
-
+            gridCrudContas.Columns[2].Width = 180;
+            gridCrudContas.Columns[3].Width = 100;
+            gridCrudContas.Columns[4].Width = 110;
+            gridCrudContas.Columns[5].Width = 100;
+            gridCrudContas.Columns[6].Width = 100;
+            gridCrudContas.Columns[7].Width = 100;
+            gridCrudContas.Columns[8].Width = 200;
+            gridCrudContas.Columns[8].DisplayIndex = 1;
+            gridCrudContas.Columns[1].DisplayIndex = 2;
+            gridCrudContas.Columns[2].DisplayIndex = 3;
+            gridCrudContas.Columns[3].DisplayIndex = 4;
+            gridCrudContas.Columns[4].DisplayIndex = 5;
+            gridCrudContas.Columns[5].DisplayIndex = 6;
+            gridCrudContas.Columns[6].DisplayIndex = 7;
+            gridCrudContas.Columns[7].DisplayIndex = 8;
         }
 
         private void acoesBehaviorSave()
@@ -566,21 +575,6 @@ namespace SistemaDespesas.views
                 clearFieldsFormulario();
                 setaGridEmCampos();
             }
-
-
-            //bttnNew.Enabled             = false;
-            //bttnDel.Enabled             = true;
-            //bttnEdit.Enabled            = true;
-            //bttnSearch.Enabled          = true;
-            //bttnRefresh.Enabled         = true;
-            //bttnSave.Enabled            = false;
-            //radioBttnComeca.Checked     = false;
-            //radioBttnContem.Checked     = false;
-            //radioBttnTermina.Checked    = false;
-            //enableFieldsFormulario();
-            //clearFieldsFormulario();
-            //setaGridEmCampos();
-
         }
 
         private void setaGridEmCampos()
@@ -592,6 +586,8 @@ namespace SistemaDespesas.views
             txtNumero.Text = gridCrudContas.CurrentRow.Cells[4].Value.ToString();
             txtDigito.Text = gridCrudContas.CurrentRow.Cells[5].Value.ToString();
             txtSaldo.Text = gridCrudContas.CurrentRow.Cells[6].Value.ToString();
+            dtDeste.Value = Convert.ToDateTime(gridCrudContas.CurrentRow.Cells[7].Value.ToString()) ;
+            txtDescricao.Text = gridCrudContas.CurrentRow.Cells[8].Value.ToString();
          //  
             //txtUf.Text = gridCrudContas.CurrentRow.Cells[8].Value.ToString();
             //txtCep.Text = gridCrudContas.CurrentRow.Cells[9].Value.ToString();
@@ -672,6 +668,8 @@ namespace SistemaDespesas.views
             txtDigito.Text = "";
             txtAgencia.Text = "";
             txtSaldo.Text = "";
+            txtDescricao.Text = "";
+            dtDeste.Value = DateTime.Now;
        
         }
 
@@ -773,13 +771,15 @@ namespace SistemaDespesas.views
                     }
                     else if (rem.Length >= 3)
                     {
-
+                       
                         contaController.Cadastrar(txtNome.Text,
                             cbBanco.SelectedItem.ToString(),
                             txtAgencia.Text,
                             txtNumero.Text,
                             txtDigito.Text,
-                            Convert.ToDouble(txtSaldo.Text));
+                            Convert.ToDouble(txtSaldo.Text),
+                           dtDeste.Value,
+                            txtDescricao.Text);
                         if ("NS".Equals(contaController.AcaoCrudContaController()))
                         {
                             txtNome.Focus();
@@ -831,8 +831,10 @@ namespace SistemaDespesas.views
                             txtAgencia.Text, 
                             txtNumero.Text,
                             txtDigito.Text,
-                            Convert.ToDouble(txtSaldo.Text));
-                        //Editar(Convert.ToInt32(txtBoxId.Text.Trim()), Convert.ToInt32(txtBoxIdEndereco.Text.Trim()), txtBoxName.Text, txtComplemento.Text)
+                            Convert.ToDouble(txtSaldo.Text),
+                            dtDeste.Value,
+                            txtDescricao.Text);
+                    
                         if ("AT".Equals(contaController.AcaoCrudContaController()))
                         {
                             operationType = "newInsertion";
@@ -861,14 +863,16 @@ namespace SistemaDespesas.views
                     }
                     else if (rem.Length >= 3)
                     {
-                        //   controllerPessoa.Editar(Convert.ToInt32(txtBoxId.Text.Trim()), Convert.ToInt32(txtBoxIdEndereco.Text), txtBoxName.Text, txtComplemento.Text);
+                        
                         contaController.Editar(Convert.ToInt32(txtBoxId.Text.Trim()),
                               txtNome.Text,
                               cbBanco.SelectedItem.ToString(),
                               txtAgencia.Text,
                               txtNumero.Text,
                               txtDigito.Text,
-                              Convert.ToDouble(txtSaldo.Text));
+                              Convert.ToDouble(txtSaldo.Text),
+                             dtDeste.Value,
+                            txtDescricao.Text);
                         if ("AT".Equals(contaController.AcaoCrudContaController()))
                         {
                             behaviorRefresh();
@@ -1308,6 +1312,11 @@ namespace SistemaDespesas.views
         {
             _InstanciaContasView = null;
             Close();
+        }
+
+        private void ContasView_Load_1(object sender, EventArgs e)
+        {
+
         }
     }
 
