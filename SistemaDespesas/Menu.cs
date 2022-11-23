@@ -13,7 +13,7 @@ namespace SistemaDespesas
         {
             ContasView viewContas = ContasView.GetInstanciaContasView();
             viewContas.MdiParent = this;
-            viewContas.Text = "Gerenciamento de Endereços Offline";
+            viewContas.Text = "Gerenciamento Contas";
             viewContas.Show();
         }
 
@@ -21,7 +21,7 @@ namespace SistemaDespesas
         {
             Movimentos viewMov = Movimentos.GetInstanciaMovimentos();
             viewMov.MdiParent = this;
-            viewMov.Text = "Gerenciamento de Endereços Offline";
+            viewMov.Text = "Gerenciamento Movimentos";
             viewMov.Show();
         }
     }
