@@ -74,6 +74,9 @@ namespace Controller
         public List<Conta> PesquisarComecaCom(string coluna, string campo, string pesquisar)
         {
             ListarPesquisados();
+
+
+
             return rep.PesquisarComeca(coluna, campo, pesquisar);
         }
 
