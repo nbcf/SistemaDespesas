@@ -30,6 +30,9 @@ namespace Controller
             rep.Cadastrar(contacad);
         }
 
+
+      
+
         public Conta Buscar(int id)
         {
             return rep.Buscar(id);

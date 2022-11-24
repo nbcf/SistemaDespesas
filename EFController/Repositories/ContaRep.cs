@@ -17,15 +17,10 @@ namespace EFController.Repositories
     {
 
         SistemaContext ctx = new SistemaContext();
-        public Conta pmContaRep;
         public int listarQtPesquisa = 0;
         public string acaoCrudConta = "";
         public void Cadastrar(Conta obj)
         {
-
-            //// using (SistemaContext ctx = new SistemaContext())
-            // {
-
             try
             {
                 ctx.Contas.Add(obj);
@@ -36,9 +31,10 @@ namespace EFController.Repositories
             {
                 acaoCrudConta = "NS";
             }
-            //}
-
+            
         }
+
+      
 
 
         public Conta Buscar(int id)
@@ -129,8 +125,6 @@ namespace EFController.Repositories
 
         public void Editar(Conta objNovo)
         {
-            //   using (var ctx = new SistemaContext())
-            // {
             try
             {
                 Conta objAntigo = ctx.Contas.Find(objNovo.Id);
@@ -143,15 +137,14 @@ namespace EFController.Repositories
                 objAntigo.Data_Abertura = objNovo.Data_Abertura;
                 objAntigo.Descricao = objNovo.Descricao;
                 ctx.SaveChanges();
-                acaoCrudConta = "EDIT!";
+                acaoCrudConta = "AT";
             }
             catch (Exception e)
             {
-                acaoCrudConta = "NEDIT";
+                acaoCrudConta = "NAT";
 
             }
 
-            // }
         }
 
 
@@ -166,31 +159,31 @@ namespace EFController.Repositories
         }
 
 
-        //List<Conta> ListarPaginada(string listarPor, string ordernarPor, int limitt, int offset)
         public List<Conta> PesquisarComeca(string coluna, object campo, string pesquisar)
         {
             var ctx = new SistemaContext();
             List<Conta> contasListadasPesquisarComeca = new List<Conta>();
-
-            try
+            string ajusteEF;
+            if (String.IsNullOrEmpty(pesquisar) || pesquisar.Trim().Equals(""))
             {
+                ajusteEF = "A*9@A28";
 
-                if (pesquisar == "")
-                {
-                    var Contas = (from obj in ctx.Contas select obj).Where(x => x.Nome.StartsWith(pesquisar)).OrderBy(x => x.Nome).ToList();
+            } else { 
+            ajusteEF= pesquisar;
+            }
+            try{
+
+                if (pesquisar == ""){
+                    var Contas = (from obj in ctx.Contas select obj).Where(x => x.Nome.StartsWith(ajusteEF)).OrderBy(x => x.Nome).ToList();
                     contasListadasPesquisarComeca = Contas;
 
-                }
-                else
-                {
-                    var Contas = (from obj in ctx.Contas select obj).Where(x => x.Nome.StartsWith(pesquisar)).OrderBy(x => x.Nome).ToList();
+                }else{
+                    var Contas = (from obj in ctx.Contas select obj).Where(x => x.Nome.StartsWith(ajusteEF)).OrderBy(x => x.Nome).ToList();
                     contasListadasPesquisarComeca = Contas;
                 }
                 listarQtPesquisa = contasListadasPesquisarComeca.Count;
                 return contasListadasPesquisarComeca;
-            }
-            catch (Exception ex)
-            {
+            }catch (Exception ex){
                 throw ex;
             }
         }

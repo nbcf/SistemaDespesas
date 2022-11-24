@@ -108,7 +108,7 @@
             this.bttnDel});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(949, 51);
+            this.toolStrip1.Size = new System.Drawing.Size(900, 51);
             this.toolStrip1.TabIndex = 0;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -209,7 +209,7 @@
             this.cbOrdenarPor});
             this.toolStrip2.Location = new System.Drawing.Point(0, 422);
             this.toolStrip2.Name = "toolStrip2";
-            this.toolStrip2.Size = new System.Drawing.Size(949, 28);
+            this.toolStrip2.Size = new System.Drawing.Size(900, 28);
             this.toolStrip2.TabIndex = 1;
             this.toolStrip2.Text = "toolStrip2";
             // 
@@ -386,7 +386,7 @@
             this.tabControlAssets.Location = new System.Drawing.Point(0, 51);
             this.tabControlAssets.Name = "tabControlAssets";
             this.tabControlAssets.SelectedIndex = 0;
-            this.tabControlAssets.Size = new System.Drawing.Size(949, 77);
+            this.tabControlAssets.Size = new System.Drawing.Size(900, 77);
             this.tabControlAssets.TabIndex = 2;
             // 
             // tabPagePesquisar
@@ -403,7 +403,7 @@
             this.tabPagePesquisar.Location = new System.Drawing.Point(4, 24);
             this.tabPagePesquisar.Name = "tabPagePesquisar";
             this.tabPagePesquisar.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPagePesquisar.Size = new System.Drawing.Size(941, 49);
+            this.tabPagePesquisar.Size = new System.Drawing.Size(892, 49);
             this.tabPagePesquisar.TabIndex = 0;
             this.tabPagePesquisar.Text = "Pesquisar";
             // 
@@ -514,9 +514,10 @@
             this.gridCrudContas.RowsDefaultCellStyle = dataGridViewCellStyle4;
             this.gridCrudContas.RowTemplate.Height = 25;
             this.gridCrudContas.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.gridCrudContas.Size = new System.Drawing.Size(949, 294);
+            this.gridCrudContas.Size = new System.Drawing.Size(900, 294);
             this.gridCrudContas.TabIndex = 3;
             this.gridCrudContas.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridCrudContas_CellClick);
+            this.gridCrudContas.Click += new System.EventHandler(this.gridCrudContas_Click);
             // 
             // groupBoxFormulario
             // 
@@ -528,7 +529,7 @@
             this.groupBoxFormulario.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBoxFormulario.Location = new System.Drawing.Point(0, 128);
             this.groupBoxFormulario.Name = "groupBoxFormulario";
-            this.groupBoxFormulario.Size = new System.Drawing.Size(949, 294);
+            this.groupBoxFormulario.Size = new System.Drawing.Size(900, 294);
             this.groupBoxFormulario.TabIndex = 4;
             this.groupBoxFormulario.TabStop = false;
             // 
@@ -706,7 +707,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(949, 450);
+            this.ClientSize = new System.Drawing.Size(900, 450);
             this.Controls.Add(this.groupBoxFormulario);
             this.Controls.Add(this.gridCrudContas);
             this.Controls.Add(this.tabControlAssets);

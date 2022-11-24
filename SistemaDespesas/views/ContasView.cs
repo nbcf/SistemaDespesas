@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -153,6 +154,213 @@ namespace SistemaDespesas.views
         {
             _InstanciaContasView = null;
         }
+        private void behaviorSave()
+        {
+            string retiraEspacos = txtNome.Text;
+            string rem = retiraEspacos.Trim();
+            if (txtBoxId.Text.Trim().Equals("") || txtBoxId.Text.Trim() == null)
+            {
+                if (operationType.Equals("newInsertion") && typeEdition.Equals("insert"))
+                {
+                    if (rem.Length <= 3)
+                    {
+                        var resultado = MessageBox.Show("A Inserção não alcançou o número mínimo de 3 caracteres.\nPara tentar novamente clique no botão 'Sim'. E no botão 'Não' para cancelar e sair do modo de Inserção.", "Aviso do Sistema", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                        if (resultado == DialogResult.Yes)
+                        {
+                            txtNome.Text = "";
+                            txtNome.Focus();
+                        }
+                        else if (resultado == DialogResult.No)
+                        {
+                            behaviorRefresh();
+                        }
+                    }
+                    else if (rem.Length >= 3)
+                    {
+                        contaController.Cadastrar(txtNome.Text,
+                            cbBanco.SelectedItem.ToString(),
+                            txtAgencia.Text,
+                            txtNumero.Text,
+                            txtDigito.Text,
+                            Convert.ToDouble(txtSaldo.Text, CultureInfo.CurrentCulture),
+                           dtDeste.Value,
+                            txtDescricao.Text);
+                        if ("NS".Equals(contaController.AcaoCrudContaController()))
+                        {
+                            txtNome.Focus();
+                            txtNome.Text = "";
+
+                        }
+                        else if ("S!".Equals(contaController.AcaoCrudContaController()))
+                        {
+                            operationType = "newInsertion";
+                            typeEdition = "insert";
+                            acoesBehaviorSave();
+
+                        }
+                        else if ("S!!".Equals(contaController.AcaoCrudContaController()))
+                        {
+                            //bttnNew
+                            acoesBehaviorSave();
+
+                        }
+                    }
+                }
+            }
+            else if (!txtBoxId.Text.Trim().Equals("") || txtBoxId.Text.Trim() != null)
+            {
+
+                if (operationType.Equals("updateData") && typeEdition.Equals("insert"))
+                {
+                    if (rem.Length <= 3)
+                    {
+
+                        var resultado = MessageBox.Show("A Edição não alcançou o número mínimo de 3 caracteres.\nPara tentar novamente clique no botão 'Sim'. E no botão 'Não' para cancelar e sair do modo de Inserção.", "Aviso do Sistema", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                        if (resultado == DialogResult.Yes)
+                        {
+
+                            txtNome.Focus();
+                        }
+                        else if (resultado == DialogResult.No)
+                        {
+
+                            behaviorRefresh();
+                        }
+
+                    }
+                    else if (rem.Length >= 3)
+                    {
+                        contaController.Editar(Convert.ToInt32(txtBoxId.Text.Trim()),
+                            txtNome.Text,
+                            cbBanco.SelectedItem.ToString(),
+                            txtAgencia.Text,
+                            txtNumero.Text,
+                            txtDigito.Text,
+                            Convert.ToDouble(txtSaldo.Text, CultureInfo.CurrentCulture),
+                            dtDeste.Value,
+                            txtDescricao.Text);
+                        if ("AT".Equals(contaController.AcaoCrudContaController()))
+                        {
+                            operationType = "newInsertion";
+                            typeEdition = "insert";
+                            behaviorRefresh();
+                        }
+                    }
+                }
+                else if (operationType.Equals("updateData") && typeEdition.Equals("search"))
+                {
+
+                    if (rem.Length <= 3)
+                    {
+                        var resultado = MessageBox.Show("A Edição não alcançou o número mínimo de 3 caracteres.\nPara tentar novamente clique no botão 'Sim'. E no botão 'Não' para cancelar e sair do modo de Inserção.", "Aviso do Sistema", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                        if (resultado == DialogResult.Yes)
+                        {
+                            txtNome.Focus();
+                        }
+                        else if (resultado == DialogResult.No)
+                        {
+                            operationType = "updateData";
+                            typeEdition = "search";
+                            behaviorRefresh();
+                        }
+
+                    }
+                    else if (rem.Length >= 3)
+                    {
+                        contaController.Editar(Convert.ToInt32(txtBoxId.Text.Trim()),
+                            txtNome.Text,
+                            cbBanco.SelectedItem.ToString(),
+                            txtAgencia.Text,
+                            txtNumero.Text,
+                            txtDigito.Text,
+                            Convert.ToDouble(txtSaldo.Text, CultureInfo.CurrentCulture),
+                            dtDeste.Value,
+                            txtDescricao.Text);
+                        if ("AT".Equals(contaController.AcaoCrudContaController()))
+                        {
+                            behaviorRefresh();
+                            puxarparametroPesquisa();
+
+                        }
+                    }
+                }
+            }
+        }
+
+
+
+        /// <summary>
+        /// ///
+        /// </summary>
+        private void acoesBehaviorSave()
+        {
+
+            bttnDel.Enabled = false;
+            bttnEdit.Enabled = false;
+            bttnSearch.Enabled = true;
+            bttnRefresh.Enabled = true;
+            bttnSave.Enabled = false;
+            bttnNew.Enabled = true;
+            gridCrudContas.Visible = true;
+            radioBttnComeca.Checked = false;
+            radioBttnContem.Checked = false;
+            radioBttnTermina.Checked = false;
+            tabControlAssets.Visible = false;
+            gridCrudContas.Visible = true;
+            tabControlAssets.TabPages.Remove(tabPagePesquisar);
+            groupBoxFormulario.Enabled = false;
+            groupBoxFormulario.Visible = false;
+            clearFieldsFormulario();
+            disableFieldsFormulario();
+            puxarparametro(0, Convert.ToInt32(cbButtnQuantPage.SelectedItem), "Sim");
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        private void behaviorEdit()
+        {
+
+            typeEdition = "insert";
+            operationType = "updateData";
+            bttnDel.Enabled = false;
+            bttnEdit.Enabled = false;
+            bttnSearch.Enabled = false;
+            bttnRefresh.Enabled = true;
+            bttnSave.Enabled = true;
+            bttnNew.Enabled = false;
+            gridCrudContas.Visible = false;
+            tabControlAssets.Visible = false;
+            tabControlAssets.TabPages.Remove(tabPagePesquisar);
+            groupBoxFormulario.Enabled = true;
+            groupBoxFormulario.Visible = true;
+            enableFieldsFormulario();
+            clearFieldsFormulario();
+            txtBoxId.Enabled = false;
+            setaGridEmCampos();
+            toolStrip2.Visible= false;
+        }
+
+        private void behaviorEditPesquisa()
+        {
+            typeEdition = "search";
+            bttnDel.Enabled = false;
+            bttnEdit.Enabled = false;
+            bttnSearch.Enabled = false;
+            bttnRefresh.Enabled = true;
+            bttnSave.Enabled = true;
+            bttnNew.Enabled = false;
+            gridCrudContas.Visible = false;
+            tabControlAssets.Visible = false;
+            tabControlAssets.TabPages.Remove(tabPagePesquisar);
+            groupBoxFormulario.Enabled = true;
+            groupBoxFormulario.Visible = true;
+            enableFieldsFormulario();
+            clearFieldsFormulario();
+            txtBoxId.Enabled = false;
+            setaGridEmCampos();
+        }
+
+
 
         private void toolStripButton9_Click(object sender, EventArgs e)
         {
@@ -183,7 +391,7 @@ namespace SistemaDespesas.views
                 lbTotalEncontrados.Visible = true;
                 txtBoxPesquisar.Text = "";
                 txtBoxPesquisar.Focus();
-          //     txtBoxPesquisar.Text = "";
+               txtBoxPesquisar.Text = "";
                 txtBoxPesquisar.Focus();
                 radioBttnComeca.Checked = true;
                 gridCrudContas.DataSource = contaController.PesquisarComecaCom("nome", "@nome", "");
@@ -195,8 +403,8 @@ namespace SistemaDespesas.views
                 lblistarpor.Visible = false;
                 lbordem.Visible = false;
                 lbquantpg.Visible = false;
-              //  groupBoxFormulario.Enabled = false;
-              //  groupBoxFormulario.Visible = false;
+                groupBoxFormulario.Enabled = false;
+                groupBoxFormulario.Visible = false;
             }
             else
             {
@@ -315,11 +523,17 @@ namespace SistemaDespesas.views
             tabControlAssets.TabPages.Remove(tabPagePesquisar);
             groupBoxFormulario.Enabled = true;
             groupBoxFormulario.Visible = true;
-          //  clearFieldsFormulario();
-          //  enableFieldsFormulario();
+            clearFieldsFormulario();
+            enableFieldsFormulario();
             operationType = "newInsertion";
             txtBoxId.Enabled = false;
         }
+
+
+
+        /// <summary>
+        /// ///
+        /// </summary>
         private void behaviorRefresh()
         {
             if (operationType == "updateData" && typeEdition == "search")
@@ -356,9 +570,8 @@ namespace SistemaDespesas.views
                 groupBoxFormulario.Enabled = false;
                 groupBoxFormulario.Visible = false;
                 clearFieldsFormulario();
-                 disableFieldsFormulario();
+                disableFieldsFormulario();
                 puxarparametro(0, Convert.ToInt32(cbButtnQuantPage.SelectedItem), "Sim");
-                  
                 gridCrudContas.ClearSelection();
                 bttnBeginPages.Visible = true;
                 bttnOnePageLeft.Visible = true;
@@ -375,7 +588,7 @@ namespace SistemaDespesas.views
                 lblistarpor.Visible = true;
                 cbOrdemParam.Visible = true;
                 lbordem.Visible = true;
-                toolStrip2.Visible = true;
+                 toolStrip2.Visible = true;
 
             }
             else if (operationType == "" ||
@@ -398,9 +611,9 @@ namespace SistemaDespesas.views
                 tabControlAssets.TabPages.Remove(tabPagePesquisar);
                 groupBoxFormulario.Enabled = false;
                 groupBoxFormulario.Visible = false;
-               clearFieldsFormulario();
-               disableFieldsFormulario();
-                 puxarparametro(0, Convert.ToInt32(cbButtnQuantPage.SelectedItem), "Sim");
+                clearFieldsFormulario();
+                disableFieldsFormulario();
+                puxarparametro(0, Convert.ToInt32(cbButtnQuantPage.SelectedItem), "Sim");
                 gridCrudContas.ClearSelection();
                 lbTotalEncontrados.Visible = false;
                 bttnBeginPages.Visible = true;
@@ -420,7 +633,6 @@ namespace SistemaDespesas.views
                 toolStrip2.Visible = true;
             }
         }
-
         private void DataGridModel()
         {
             gridCrudContas.Columns[0].HeaderText = "ID";
@@ -451,73 +663,6 @@ namespace SistemaDespesas.views
             gridCrudContas.Columns[6].DisplayIndex = 7;
             gridCrudContas.Columns[7].DisplayIndex = 8;
         }
-
-        private void acoesBehaviorSave()
-        {
-
-            bttnDel.Enabled = false;
-            bttnEdit.Enabled = false;
-            bttnSearch.Enabled = true;
-            bttnRefresh.Enabled = true;
-            bttnSave.Enabled = false;
-            bttnNew.Enabled = true;
-            gridCrudContas.Visible = true;
-            radioBttnComeca.Checked = false;
-            radioBttnContem.Checked = false;
-            radioBttnTermina.Checked = false;
-            tabControlAssets.Visible = false;
-         
-            tabControlAssets.TabPages.Remove(tabPagePesquisar);
-            groupBoxFormulario.Enabled = false;
-            groupBoxFormulario.Visible = false;
-            clearFieldsFormulario();
-            disableFieldsFormulario();
-            puxarparametro(0, Convert.ToInt32(cbButtnQuantPage.SelectedItem), "Sim");
-        }
-
-        private void behaviorEdit()
-        {
-
-            typeEdition = "insert";
-            operationType = "updateData";
-            bttnDel.Enabled = false;
-            bttnEdit.Enabled = false;
-            bttnSearch.Enabled = false;
-            bttnRefresh.Enabled = true;
-            bttnSave.Enabled = true;
-            bttnNew.Enabled = false;
-            gridCrudContas.Visible = false;
-            tabControlAssets.Visible = false;
-            tabControlAssets.TabPages.Remove(tabPagePesquisar);
-            groupBoxFormulario.Enabled = true;
-            groupBoxFormulario.Visible = true;
-            enableFieldsFormulario();
-            clearFieldsFormulario();
-            txtBoxId.Enabled = false;
-            setaGridEmCampos();
-        }
-
-        private void behaviorEditPesquisa()
-        {
-            typeEdition = "search";
-            bttnDel.Enabled = false;
-            bttnEdit.Enabled = false;
-            bttnSearch.Enabled = false;
-            bttnRefresh.Enabled = true;
-            bttnSave.Enabled = true;
-            bttnNew.Enabled = false;
-            gridCrudContas.Visible = false;
-            tabControlAssets.Visible = false;
-            tabControlAssets.TabPages.Remove(tabPagePesquisar);
-            groupBoxFormulario.Enabled = true;
-            groupBoxFormulario.Visible = true;
-            enableFieldsFormulario();
-            clearFieldsFormulario();
-            txtBoxId.Enabled = false;
-            setaGridEmCampos();
-        }
-
-
 
         private void behaviorClickGrid()
         {
@@ -611,20 +756,18 @@ namespace SistemaDespesas.views
         private void bttnEdit_Click(object sender, EventArgs e)
         {
             var gridVazia = gridCrudContas.CurrentRow.Cells[0].Value.ToString();
-            if (string.IsNullOrEmpty(gridVazia))
+            if (string.IsNullOrEmpty(gridVazia) || gridVazia.Length ==0)
             {
-            }
-
-
-            else if (gridVazia.Length > 0)
+            } else if (gridVazia.Length > 0)
             {
                 if (typeEdition.Equals("insert") && operationType.Equals("newInsertion"))
                 {
+                    operationType = "newInsertion";
                     behaviorEdit();
                 }
                 else if (typeEdition.Equals("search") && operationType.Equals("updateData"))
                 {
-
+                    operationType = "updateData";
                     behaviorEditPesquisa();
                 }
 
@@ -662,7 +805,9 @@ namespace SistemaDespesas.views
                     }
 
                 }
+
             }
+
             else { }
         }
 
@@ -753,144 +898,6 @@ namespace SistemaDespesas.views
             }
         }
 
-
-        private void behaviorSave()
-        {
-            string retiraEspacos = txtNome.Text;
-            string rem = retiraEspacos.Trim();
-            if (txtBoxId.Text.Trim().Equals("") || txtBoxId.Text.Trim() == null)
-            {
-                if (operationType.Equals("newInsertion") && typeEdition.Equals("insert"))
-                {
-                    if (rem.Length <= 3)
-                    {
-                        var resultado = MessageBox.Show("A Inserção não alcançou o número mínimo de 3 caracteres.\nPara tentar novamente clique no botão 'Sim'. E no botão 'Não' para cancelar e sair do modo de Inserção.", "Aviso do Sistema", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                        if (resultado == DialogResult.Yes)
-                        {
-                            txtNome.Text = "";
-                            txtNome.Focus();
-                        }
-                        else if (resultado == DialogResult.No)
-                        {
-                            behaviorRefresh();
-                        }
-                    }
-                    else if (rem.Length >= 3)
-                    {
-                       
-                        contaController.Cadastrar(txtNome.Text,
-                            cbBanco.SelectedItem.ToString(),
-                            txtAgencia.Text,
-                            txtNumero.Text,
-                            txtDigito.Text,
-                            Convert.ToDouble(txtSaldo.Text),
-                           dtDeste.Value,
-                            txtDescricao.Text);
-                        if ("NS".Equals(contaController.AcaoCrudContaController()))
-                        {
-                            txtNome.Focus();
-                            txtNome.Text = "";
-
-                        }
-                        else if ("S!".Equals(contaController.AcaoCrudContaController()))
-                        {
-                            operationType = "newInsertion";
-                            typeEdition = "insert";
-                            behaviorRefresh();
-
-                        }
-                        else if ("S!!".Equals(contaController.AcaoCrudContaController()))
-                        {
-                            //bttnNew
-                            acoesBehaviorSave();
-
-                        }
-                    }
-                }
-            }
-            else if (!txtBoxId.Text.Trim().Equals("") || txtBoxId.Text.Trim() != null)
-            {
-
-                if (operationType.Equals("updateData") && typeEdition.Equals("insert"))
-                {
-                    if (rem.Length <= 3)
-                    {
-
-                        var resultado = MessageBox.Show("A Edição não alcançou o número mínimo de 3 caracteres.\nPara tentar novamente clique no botão 'Sim'. E no botão 'Não' para cancelar e sair do modo de Inserção.", "Aviso do Sistema", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                        if (resultado == DialogResult.Yes)
-                        {
-
-                            txtNome.Focus();
-                        }
-                        else if (resultado == DialogResult.No)
-                        {
-
-                            behaviorRefresh();
-                        }
-
-                    }
-                    else if (rem.Length >= 3)
-                    {
-                        contaController.Editar(Convert.ToInt32(txtBoxId.Text.Trim()),
-                            txtNome.Text, 
-                            cbBanco.SelectedItem.ToString(),
-                            txtAgencia.Text, 
-                            txtNumero.Text,
-                            txtDigito.Text,
-                            Convert.ToDouble(txtSaldo.Text),
-                            dtDeste.Value,
-                            txtDescricao.Text);
-                    
-                        if ("AT".Equals(contaController.AcaoCrudContaController()))
-                        {
-                            operationType = "newInsertion";
-                            typeEdition = "insert";
-                            behaviorRefresh();
-                        }
-                    }
-                }
-                else if (operationType.Equals("updateData") && typeEdition.Equals("search"))
-                {
-
-                    if (rem.Length <= 3)
-                    {
-                        var resultado = MessageBox.Show("A Edição não alcançou o número mínimo de 3 caracteres.\nPara tentar novamente clique no botão 'Sim'. E no botão 'Não' para cancelar e sair do modo de Inserção.", "Aviso do Sistema", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                        if (resultado == DialogResult.Yes)
-                        {
-                            txtNome.Focus();
-                        }
-                        else if (resultado == DialogResult.No)
-                        {
-                            operationType = "updateData";
-                            typeEdition = "search";
-                            behaviorRefresh();
-                        }
-
-                    }
-                    else if (rem.Length >= 3)
-                    {
-                        
-                        contaController.Editar(Convert.ToInt32(txtBoxId.Text.Trim()),
-                              txtNome.Text,
-                              cbBanco.SelectedItem.ToString(),
-                              txtAgencia.Text,
-                              txtNumero.Text,
-                              txtDigito.Text,
-                              Convert.ToDouble(txtSaldo.Text),
-                             dtDeste.Value,
-                            txtDescricao.Text);
-                        if ("AT".Equals(contaController.AcaoCrudContaController()))
-                        {
-                            behaviorRefresh();
-                            puxarparametroPesquisa();
-
-                        }
-                    }
-                }
-            }
-        }
-
-     
         private void puxarparametroPesquisa()
         {
 
@@ -1321,6 +1328,11 @@ namespace SistemaDespesas.views
         }
 
         private void ContasView_Load_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void gridCrudContas_Click(object sender, EventArgs e)
         {
 
         }
