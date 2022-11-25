@@ -16,7 +16,7 @@ namespace Entidades
         public string? Digito { get; set; }
         public double Saldo { get; set; }
         public DateTime? Data_Abertura { get; set; }
-        public string Descricao { get; set; }
+        public string? Descricao { get; set; }
 
 
     }

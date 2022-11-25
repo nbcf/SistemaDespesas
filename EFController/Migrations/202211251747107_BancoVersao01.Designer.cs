@@ -7,13 +7,13 @@ namespace EFController.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.4.4")]
-    public sealed partial class banco01 : IMigrationMetadata
+    public sealed partial class BancoVersao01 : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(banco01));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(BancoVersao01));
         
         string IMigrationMetadata.Id
         {
-            get { return "202211232240184_banco01"; }
+            get { return "202211251747107_BancoVersao01"; }
         }
         
         string IMigrationMetadata.Source

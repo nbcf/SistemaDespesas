@@ -10,12 +10,12 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Globalization;
+using System.ComponentModel;
 
 namespace EFController.Repositories
 {
     public class ContaRep
     {
-
         SistemaContext ctx = new SistemaContext();
         public int listarQtPesquisa = 0;
         public string acaoCrudConta = "";
@@ -31,11 +31,8 @@ namespace EFController.Repositories
             {
                 acaoCrudConta = "NS";
             }
-            
+
         }
-
-      
-
 
         public Conta Buscar(int id)
         {
@@ -51,11 +48,25 @@ namespace EFController.Repositories
         public List<Conta> Listar()
         {
             var Contas = (from obj in ctx.Contas select obj).OrderBy(x => x.Nome).ToList();
+           
             return Contas;
 
         }
 
-  
+        public  Conta GetProdutoCodigo(int id)
+        {
+            var produtos = Listar();
+            return produtos[id];
+        }
+
+        public Conta getContaCodigo(int id)
+        {
+            var produtos = Listar();
+            return produtos[id];
+        }
+
+    
+
 
         public List<Conta> ListarPaginada(string listarPor, string ordernarPor, int limitt, int offset)
         {

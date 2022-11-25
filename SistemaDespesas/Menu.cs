@@ -17,6 +17,12 @@ namespace SistemaDespesas
             viewContas.Show();
         }
 
-       
+        private void movimentosToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MovimentosView viewMovimentos = MovimentosView.GetInstanciaMovimentos();
+            viewMovimentos.MdiParent = this;
+            viewMovimentos.Text = "Gerenciamento Contas";
+            viewMovimentos.Show();
+        }
     }
 }

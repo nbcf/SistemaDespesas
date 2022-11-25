@@ -16,7 +16,15 @@ namespace Controller
         private ContaRep rep = new ContaRep();
 
  
-        public void Cadastrar(string Nome, string Banco, string Agencia, string NumeroConta, string Digito, double Saldo, DateTime dataAbertura, string descricao)
+        public void Cadastrar(
+            string Nome,
+            string Banco,
+            string Agencia, 
+            string NumeroConta, 
+            string Digito,
+            double Saldo, 
+            DateTime dataAbertura,
+            string descricao)
         {
             Conta contacad = new Conta();
             contacad.Nome = Nome;
@@ -43,12 +51,8 @@ namespace Controller
         {
             return rep.Listar();
         }
+    
 
-
-        //public DataTable ComboBoxConta() {
-
-        //    return rep.combobox();
-        //}
         public void Deletar(int id)
         {
             rep.Deletar(id);

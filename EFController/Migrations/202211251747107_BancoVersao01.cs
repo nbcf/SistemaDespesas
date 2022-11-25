@@ -3,7 +3,7 @@
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class banco01 : DbMigration
+    public partial class BancoVersao01 : DbMigration
     {
         public override void Up()
         {
@@ -23,10 +23,24 @@
                     })
                 .PrimaryKey(t => t.ID_CONTAS);
             
+            CreateTable(
+                "dbo.Movimentos",
+                c => new
+                    {
+                        ID_MOVIMENTO = c.Int(nullable: false, identity: true),
+                        DESCRICAO = c.String(),
+                        TIPOMOV = c.String(),
+                        DATAMOV = c.DateTime(),
+                        VALOR = c.Double(nullable: false),
+                        IDCONTA = c.Int(),
+                    })
+                .PrimaryKey(t => t.ID_MOVIMENTO);
+            
         }
         
         public override void Down()
         {
+            DropTable("dbo.Movimentos");
             DropTable("dbo.Contas");
         }
     }

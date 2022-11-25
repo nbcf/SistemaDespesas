@@ -9,6 +9,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.ReportingServices.ReportViewerControl.Winforms" Version="150.1537.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Controller\Controller.csproj" />
   </ItemGroup>
 

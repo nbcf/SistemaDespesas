@@ -142,6 +142,8 @@ namespace SistemaDespesas.views
         {
             InitializeComponent();
             carregarEstadoPadrao("CarregaPadraoIDTodosUltimos", 0);
+            txtIdconta.Visible = false;
+            label1.Visible = false;
         }
 
    
@@ -158,7 +160,7 @@ namespace SistemaDespesas.views
         {
             string retiraEspacos = txtNome.Text;
             string rem = retiraEspacos.Trim();
-            if (txtBoxId.Text.Trim().Equals("") || txtBoxId.Text.Trim() == null)
+            if (txtIdconta.Text.Trim().Equals("") || txtIdconta.Text.Trim() == null)
             {
                 if (operationType.Equals("newInsertion") && typeEdition.Equals("insert"))
                 {
@@ -183,12 +185,12 @@ namespace SistemaDespesas.views
                             txtNumero.Text,
                             txtDigito.Text,
                             Convert.ToDouble(txtSaldo.Text, CultureInfo.CurrentCulture),
-                           dtDeste.Value,
+                            dtData.Value,
                             txtDescricao.Text);
                         if ("NS".Equals(contaController.AcaoCrudContaController()))
                         {
-                            txtNome.Focus();
-                            txtNome.Text = "";
+                            txtIdconta.Focus();
+                            txtIdconta.Text = "";
 
                         }
                         else if ("S!".Equals(contaController.AcaoCrudContaController()))
@@ -196,18 +198,20 @@ namespace SistemaDespesas.views
                             operationType = "newInsertion";
                             typeEdition = "insert";
                             acoesBehaviorSave();
+                            behaviorRefresh();
 
                         }
                         else if ("S!!".Equals(contaController.AcaoCrudContaController()))
                         {
                             //bttnNew
                             acoesBehaviorSave();
+                            behaviorRefresh();
 
                         }
                     }
                 }
             }
-            else if (!txtBoxId.Text.Trim().Equals("") || txtBoxId.Text.Trim() != null)
+            else if (!txtIdconta.Text.Trim().Equals("") || txtIdconta.Text.Trim() != null)
             {
 
                 if (operationType.Equals("updateData") && typeEdition.Equals("insert"))
@@ -230,14 +234,14 @@ namespace SistemaDespesas.views
                     }
                     else if (rem.Length >= 3)
                     {
-                        contaController.Editar(Convert.ToInt32(txtBoxId.Text.Trim()),
+                        contaController.Editar(Convert.ToInt32(txtIdconta.Text.Trim()),
                             txtNome.Text,
                             cbBanco.SelectedItem.ToString(),
                             txtAgencia.Text,
                             txtNumero.Text,
                             txtDigito.Text,
                             Convert.ToDouble(txtSaldo.Text, CultureInfo.CurrentCulture),
-                            dtDeste.Value,
+                            dtData.Value,
                             txtDescricao.Text);
                         if ("AT".Equals(contaController.AcaoCrudContaController()))
                         {
@@ -267,14 +271,14 @@ namespace SistemaDespesas.views
                     }
                     else if (rem.Length >= 3)
                     {
-                        contaController.Editar(Convert.ToInt32(txtBoxId.Text.Trim()),
+                        contaController.Editar(Convert.ToInt32(txtIdconta.Text.Trim()),
                             txtNome.Text,
                             cbBanco.SelectedItem.ToString(),
                             txtAgencia.Text,
                             txtNumero.Text,
                             txtDigito.Text,
                             Convert.ToDouble(txtSaldo.Text, CultureInfo.CurrentCulture),
-                            dtDeste.Value,
+                            dtData.Value,
                             txtDescricao.Text);
                         if ("AT".Equals(contaController.AcaoCrudContaController()))
                         {
@@ -335,7 +339,7 @@ namespace SistemaDespesas.views
             groupBoxFormulario.Visible = true;
             enableFieldsFormulario();
             clearFieldsFormulario();
-            txtBoxId.Enabled = false;
+            txtIdconta.Enabled = false;
             setaGridEmCampos();
             toolStrip2.Visible= false;
         }
@@ -356,7 +360,7 @@ namespace SistemaDespesas.views
             groupBoxFormulario.Visible = true;
             enableFieldsFormulario();
             clearFieldsFormulario();
-            txtBoxId.Enabled = false;
+            txtIdconta.Enabled = false;
             setaGridEmCampos();
         }
 
@@ -426,7 +430,7 @@ namespace SistemaDespesas.views
                 lbtitulototalencontrados.Visible = false;
                 lbTotalEncontrados.Visible = false;
                 puxarparametro(0, Convert.ToInt32(cbButtnQuantPage.SelectedItem), "Sim");
-                txtBoxId.Text = "";
+                txtIdconta.Text = "";
                 typeEdition = "insert";
                 cbButtnQuantPage.Visible = true;
                 cbOrdemParam.Visible = true;
@@ -483,7 +487,7 @@ namespace SistemaDespesas.views
             lbTotalEncontrados.Visible = false;
             clearFieldsFormulario();
             disableFieldsFormulario();
-            txtBoxId.Visible = false;
+            txtIdconta.Visible = false;
             label1.Visible = false;
 
 
@@ -526,7 +530,7 @@ namespace SistemaDespesas.views
             clearFieldsFormulario();
             enableFieldsFormulario();
             operationType = "newInsertion";
-            txtBoxId.Enabled = false;
+            txtIdconta.Enabled = false;
         }
 
 
@@ -641,10 +645,11 @@ namespace SistemaDespesas.views
             gridCrudContas.Columns[3].HeaderText = "AGÊNCIA";
             gridCrudContas.Columns[4].HeaderText = "N°. CONTA";
             gridCrudContas.Columns[5].HeaderText = "DIGITO";
+            gridCrudContas.Columns[5].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             gridCrudContas.Columns[6].HeaderText = "SALDO";
+            gridCrudContas.Columns[6].DefaultCellStyle.Format = "C2";
             gridCrudContas.Columns[7].HeaderText = "DESDE";
             gridCrudContas.Columns[8].HeaderText = "DESCRIÇÃO";
-
             gridCrudContas.Columns[0].Width = 60;
             gridCrudContas.Columns[1].Width = 180;
             gridCrudContas.Columns[2].Width = 180;
@@ -727,16 +732,16 @@ namespace SistemaDespesas.views
 
         private void setaGridEmCampos()
         {
-            txtBoxId.Text = gridCrudContas.CurrentRow.Cells[0].Value.ToString();
+            txtIdconta.Text = gridCrudContas.CurrentRow.Cells[0].Value.ToString();
             txtNome.Text = gridCrudContas.CurrentRow.Cells[1].Value.ToString();
             cbBanco.SelectedItem = gridCrudContas.CurrentRow.Cells[2].Value.ToString();
             txtAgencia.Text = gridCrudContas.CurrentRow.Cells[3].Value.ToString();
             txtNumero.Text = gridCrudContas.CurrentRow.Cells[4].Value.ToString();
             txtDigito.Text = gridCrudContas.CurrentRow.Cells[5].Value.ToString();
             txtSaldo.Text = gridCrudContas.CurrentRow.Cells[6].Value.ToString();
-            dtDeste.Value = Convert.ToDateTime(gridCrudContas.CurrentRow.Cells[7].Value.ToString()) ;
+            dtData.Value = Convert.ToDateTime(gridCrudContas.CurrentRow.Cells[7].Value.ToString()) ;
             txtDescricao.Text = gridCrudContas.CurrentRow.Cells[8].Value.ToString();
-
+          
         }
 
         private void behaviorClickGridPesquisa()
@@ -813,15 +818,16 @@ namespace SistemaDespesas.views
 
         public void clearFieldsFormulario()
         {
-            txtBoxId.Text = "";
+            txtIdconta.Text = "";
             txtNome.Text = "";
             txtNumero.Text = "";
             txtDigito.Text = "";
             txtAgencia.Text = "";
             txtSaldo.Text = "";
             txtDescricao.Text = "";
-            dtDeste.Value = DateTime.Now;
-       
+            dtData.Value = DateTime.Now;
+            cbBanco.SelectedIndex = 0;
+
         }
 
         private void behaviorDel()
@@ -1260,8 +1266,8 @@ namespace SistemaDespesas.views
 
 
 
-        public void disableFieldsFormulario() { txtBoxId.Enabled = false;  }
-        public void enableFieldsFormulario() { txtBoxId.Enabled = true;  }
+        public void disableFieldsFormulario() { txtIdconta.Enabled = false;  }
+        public void enableFieldsFormulario() { txtIdconta.Enabled = true;  }
         public void clearFieldsPesquisar() { txtBoxPesquisar.Text = ""; cbButtonPesquisarEm.SelectedValue = 0; }
         public void disableFieldsPesquisar() { txtBoxPesquisar.Enabled = true; }
         public void enableFieldsPesquisar() { txtBoxPesquisar.Enabled = true; }
@@ -1333,6 +1339,11 @@ namespace SistemaDespesas.views
         }
 
         private void gridCrudContas_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void groupBoxFormulario_Enter(object sender, EventArgs e)
         {
 
         }
